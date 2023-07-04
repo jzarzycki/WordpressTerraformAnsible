@@ -3,3 +3,8 @@ variable "do_token" {
   description = "Digital Ocean API token"
 }
 
+variable "ssh_key_id" {
+  type        = number
+  description = "SSH key id obtained from Digital Ocean API"
+}
+
