@@ -35,4 +35,8 @@ resource "digitalocean_project" "lab" {
   purpose     = "Web Application"
   environment = "Development"
   resources   = [digitalocean_droplet.web.urn]
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
