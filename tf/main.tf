@@ -34,9 +34,16 @@ resource "digitalocean_project" "lab" {
   description = "A project for the purposes of learining DevOps"
   purpose     = "Web Application"
   environment = "Development"
-  resources   = [digitalocean_droplet.web.urn]
 
   lifecycle {
     prevent_destroy = true
   }
+}
+
+resource "digitalocean_project_resources" "lab_resources" {
+  project = digitalocean_project.lab.id
+  resources = [
+    digitalocean_droplet.web.urn,
+    digitalocean_volume.vol.urn,
+  ]
 }
