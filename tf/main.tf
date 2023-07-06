@@ -29,6 +29,22 @@ resource "digitalocean_volume_attachment" "web-vol" {
   volume_id  = digitalocean_volume.vol.id
 }
 
+resource "digitalocean_reserved_ip" "ip" {
+  region = digitalocean_droplet.web.region
+
+  lifecycle {
+    prevent_destroy = true
+  }
+}
+
+resource "digitalocean_reserved_ip_assignment" "ip-web" {
+  droplet_id = digitalocean_droplet.web.id
+  ip_address = digitalocean_reserved_ip.ip.ip_address
+
+  # Wait until mounting the volume is finished before assigning ip
+  depends_on = [digitalocean_volume_attachment.web-vol]
+}
+
 resource "digitalocean_project" "lab" {
   name        = "Learning Lab"
   description = "A project for the purposes of learining DevOps"
