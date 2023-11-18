@@ -3,7 +3,7 @@ resource "digitalocean_droplet" "web" {
   name     = "Wordpress"
   region   = "fra1"
   size     = "s-1vcpu-512mb-10gb"
-  ssh_keys = [var.ssh_key_id]
+  ssh_keys = [digitalocean_ssh_key.ssh_key.id]
   tags     = ["terraform"]
 
   lifecycle {
@@ -62,4 +62,10 @@ resource "digitalocean_project_resources" "lab_resources" {
     digitalocean_droplet.web.urn,
     digitalocean_volume.vol.urn,
   ]
+}
+
+resource "digitalocean_ssh_key" "ssh_key" {
+  name       = "terraform-digitalocean"
+  public_key = file(var.ssh_public_key_path)
+
 }

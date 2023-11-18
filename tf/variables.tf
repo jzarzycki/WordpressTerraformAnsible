@@ -3,8 +3,12 @@ variable "do_token" {
   description = "Digital Ocean API token"
 }
 
-variable "ssh_key_id" {
-  type        = number
-  description = "SSH key id obtained from Digital Ocean API"
+variable "ssh_private_key_path" {
+  type        = string
+  description = "Path to the private ssh key used to login to VPS"
 }
 
+variable "ssh_public_key_path" {
+  type        = string
+  description = "Path to the public ssh key used to login to VPS"
+}
