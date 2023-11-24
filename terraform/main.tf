@@ -71,7 +71,7 @@ resource "digitalocean_ssh_key" "ssh_key" {
 }
 
 resource "local_file" "ansible_inventory" {
-  content = templatefile("inventory.tmpl",
+  content = templatefile("inventory.j2",
     {
       ssh_user     = var.ssh_user
       ssh_key_path = var.ssh_private_key_path
