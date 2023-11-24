@@ -1,0 +1,15 @@
+---
+- name: Prepare Web Server
+  hosts: webserver
+
+  roles:
+    - common
+    - docker
+    - webserver
+
+- name: Configure Database Server
+  hosts: database
+  roles:
+    - common
+    - docker
+    - database

@@ -1,0 +1,5 @@
+---
+# tasks file for common
+- name: Print a debug message
+  ansible.builtin.debug:
+    msg: "Hello from common role!"

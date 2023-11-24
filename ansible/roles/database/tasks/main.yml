@@ -1,0 +1,5 @@
+---
+# tasks file for database
+- name: Print a debug message
+  ansible.builtin.debug:
+    msg: "Hello from database role!"
