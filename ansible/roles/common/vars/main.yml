@@ -1,2 +1,6 @@
 ---
 # vars file for common
+common_package_list:
+  - aptitude
+  - vim
+  - python3

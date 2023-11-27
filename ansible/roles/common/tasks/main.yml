@@ -1,5 +1,86 @@
 ---
 # tasks file for common
-- name: Print a debug message
-  ansible.builtin.debug:
-    msg: "Hello from common role!"
+- name: Create group for non root user
+  ansible.builtin.group:
+    name: janek
+    gid: 1000
+    state: present
+
+- name: Create non root user
+  ansible.builtin.user:
+    name: janek
+    password: "*"
+    uid: 1000
+    home: "/home/janek"
+    shell: /bin/bash
+    group: janek
+    groups: janek,sudo
+    append: true
+
+# User's password is disabled, so wouldn't be able to use sudo with a password
+- name: Allow passwordless sudo for non root user
+  ansible.builtin.lineinfile:
+    path: /etc/sudoers
+    line: "janek  ALL=(ALL) NOPASSWD: ALL"
+
+- name: Add ssh key to authorized_keys
+  ansible.posix.authorized_key:
+    key: "{{ lookup('file', '~/.ssh/terraform.pub') }}"
+    user: janek
+    state: present
+
+- name: Enable ssh public key authentication
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "^PubkeyAuthentication "
+    line: "PubkeyAuthentication yes"
+  notify: Restart ssh
+
+- name: Disable ssh password authentication
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "^PasswordAuthentication "
+    line: "PasswordAuthentication no"
+  notify: Restart ssh
+
+- name: Disable ssh host based authentication
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "^HostBasedAuthentication "
+    line: "HostBasedAuthentication no"
+  notify: Restart ssh
+
+- name: Disable ssh PAM authentication
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "^UsePAM "
+    line: "UsePAM no"
+  notify: Restart ssh
+
+# - name: Disable ssh root login
+#   ansible.builtin.lineinfile:
+#     path: /etc/ssh/sshd_config
+#     regexp: "^PermitRootLogin "
+#     line: "PermitRootLogin no"
+#   notify: Restart ssh
+
+- name: Set ssh max authentication attempts
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "^MaxAuthTries "
+    line: "MaxAuthTries 4"
+  notify: Restart ssh
+
+- name: Disallow ssh user environments
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "^PermitUserEnvironment "
+    line: "PermitUserEnvironment no"
+  notify: Restart ssh
+
+- name: Install packages
+  ansible.builtin.apt:
+    name: "{{ common_package_list }}"
+    state: present
+    update_cache: true
+    cache_valid_time: 120
