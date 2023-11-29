@@ -1,15 +1,9 @@
 ---
-- name: Prepare Web Server
+- name: Configure a Wordpress web server
   hosts: webserver
-
+  remote_user: "{{ login_user | default('janek') }}"
+  become: true
   roles:
     - common
     - docker
     - webserver
-
-- name: Configure Database Server
-  hosts: database
-  roles:
-    - common
-    - docker
-    - database
