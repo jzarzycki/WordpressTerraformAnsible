@@ -57,12 +57,12 @@
     line: "UsePAM no"
   notify: Restart ssh
 
-# - name: Disable ssh root login
-#   ansible.builtin.lineinfile:
-#     path: /etc/ssh/sshd_config
-#     regexp: "^PermitRootLogin "
-#     line: "PermitRootLogin no"
-#   notify: Restart ssh
+- name: Disable ssh root login
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "^PermitRootLogin "
+    line: "PermitRootLogin no"
+  notify: Restart ssh
 
 - name: Set ssh max authentication attempts
   ansible.builtin.lineinfile:
