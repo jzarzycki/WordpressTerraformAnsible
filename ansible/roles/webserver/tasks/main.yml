@@ -1,5 +1,13 @@
 ---
 # tasks file for webserver
-- name: Print a debug message
-  ansible.builtin.debug:
-    msg: "Hello from webserver role!"
+- name: Allow http access in ufw
+  community.general.ufw:
+    rule: allow
+    port: http
+    state: enabled
+
+- name: Allow https access in ufw
+  community.general.ufw:
+    rule: allow
+    port: https
+    state: enabled

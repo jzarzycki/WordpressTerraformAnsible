@@ -84,3 +84,9 @@
     state: present
     update_cache: true
     cache_valid_time: 120
+
+- name: Allow ssh access in ufw
+  community.general.ufw:
+    rule: allow
+    port: ssh
+    state: enabled
