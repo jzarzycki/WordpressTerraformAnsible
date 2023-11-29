@@ -27,7 +27,7 @@ ansible-playbook -i inventory main.yml --extravars "login_user=username"
 ```
 
 # Project structure
-WordpressTerraform Ansible     *# The project repository*<br>
+**WordpressTerraformAnsible**     *# The project repository*<br>
 **├── ansible**                    *# This is where all of the Ansible code resides*<br>
 **│‎ ‎ ‎ └── roles**<br>
 **│‎ ‎ ‎ ‎ ‎ ‎ ‎ ├── common**             *# Configuration common for all servers, like ssh config, basic securing of the server, etc*<br>
@@ -35,4 +35,4 @@ WordpressTerraform Ansible     *# The project repository*<br>
 **│‎ ‎ ‎ ‎ ‎ ‎ ‎ └── webserver**          *# Configuration needed to provision the wordpress site on a prepared docker host*<br>
 **└── terraform**                  *# This is where all of the Terraform code resides*<br>
 ‎ ‎ ‎ ‎ **└── modules**<br>
-‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ **└── wordpress-hosting**  *# A module containing implementation details of provisioning infrastructure for my website.*<br>
+‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ **└── wordpress-hosting**  *# Module containing implementation of provisioning infrastructure for my website.*<br>
