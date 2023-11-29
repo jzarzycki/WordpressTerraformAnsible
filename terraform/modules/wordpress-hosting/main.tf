@@ -73,10 +73,7 @@ resource "digitalocean_ssh_key" "ssh_key" {
 resource "local_file" "ansible_inventory" {
   content = templatefile(format("%s/%s", path.module, "inventory.j2"),
     {
-      ssh_user     = var.ssh_user
-      ssh_key_path = var.ssh_private_key_path
       vps_ip_addr  = digitalocean_droplet.web.ipv4_address
-      db_ip_addr   = digitalocean_droplet.web.ipv4_address
     }
   )
   filename        = "../ansible/inventory"
