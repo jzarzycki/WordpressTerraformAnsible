@@ -29,6 +29,14 @@
     user: janek
     state: present
 
+- name: Make sure ssh directory and its contents have proper permissions
+  ansible.builtin.lineinfile:
+    path: /home/janek/.ssh
+    mode: "0700"
+    owner: janek
+    group: janek
+    recurse: true
+
 - name: Harden ssh configuration
   ansible.builtin.lineinfile:
     path: /etc/ssh/sshd_config
