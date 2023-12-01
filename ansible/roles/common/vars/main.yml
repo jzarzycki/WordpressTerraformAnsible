@@ -4,3 +4,12 @@ common_package_list:
   - aptitude
   - vim
   - python3
+
+common_ssh_conf_list:
+  - { name: "PubkeyAuthentication", value: "yes" }
+  - { name: "PasswordAuthentication", value: "no" }
+  - { name: "HostBasedAuthentication", value: "no" }
+  - { name: "UsePAM", value: "no" }
+  - { name: "PermitRootLogin", value: "no" }
+  - { name: "MaxAuthTries", value: "4" }
+  - { name: "PermitUserEnvironment", value: "no" }
