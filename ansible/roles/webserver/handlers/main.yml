@@ -1,2 +1,11 @@
 ---
 # handlers file for webserver
+- name: Run docker compose
+  ansible.builtin.command:
+    cmd: "{{ item }}"
+  become: true
+  args:
+    chdir: "{{ webserver_docker_compose_dir }}"
+  loop:
+    - docker compose down
+    - docker compose up -d

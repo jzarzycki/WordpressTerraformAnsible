@@ -1,13 +1,38 @@
 ---
 # tasks file for webserver
-- name: Allow http access in ufw
-  community.general.ufw:
-    rule: allow
-    port: http
-    state: enabled
+# TODO: generate or renew ssl certs
 
-- name: Allow https access in ufw
+- name: Allow http & https access in ufw
   community.general.ufw:
     rule: allow
-    port: https
+    port: "{{ item }}"
     state: enabled
+  loop: "{{ webserver_open_ports }}"
+
+- name: Create the directory for app config
+  ansible.builtin.file:
+    path: "{{ webserver_docker_compose_dir }}"
+    state: directory
+    mode: '0700'
+    owner: docker
+    group: docker
+
+- name: Create docker volume directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0755"
+    owner: docker
+    group: docker
+  loop: "{{ webserver_docker_volumes }}"
+
+# copy over the docker-compose config
+- name: Copy over config files
+  ansible.builtin.copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: '0700'
+    owner: docker
+    group: docker
+  loop: "{{ webserver_config_files }}"
+  notify: Run docker compose

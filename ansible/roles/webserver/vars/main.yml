@@ -1,2 +1,18 @@
 ---
 # vars file for webserver
+webserver_docker_compose_dir: /home/wordpress-hosting
+webserver_persistent_volume: /mnt/vol1
+
+webserver_open_ports:
+  - http
+  - https
+
+webserver_docker_volumes:
+  - "{{ webserver_persistent_volume }}/nginx"
+  - "{{ webserver_persistent_volume }}/mysql"
+  - "{{ webserver_persistent_volume }}/wordpress"
+
+webserver_config_files:
+  - { src: "docker-compose.yml", dest: "{{ webserver_docker_compose_dir }}/docker-compose.yml" }
+  - { src: ".env", dest: "{{ webserver_docker_compose_dir }}/.env" }
+  - { src: "default.conf", dest: "{{ webserver_persistent_volume }}/nginx/default.conf" }
