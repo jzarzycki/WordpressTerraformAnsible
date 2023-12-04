@@ -11,3 +11,7 @@ docker_package_list:
   - containerd.io
   - docker-buildx-plugin
   - docker-compose-plugin
+
+docker_services:
+  - docker
+  - containerd

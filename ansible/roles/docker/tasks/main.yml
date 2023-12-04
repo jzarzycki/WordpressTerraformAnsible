@@ -1,5 +1,6 @@
 ---
 # tasks file for docker
+
 - name: Install docker dependencies
   ansible.builtin.apt:
     name: "{{ docker_requirements_list }}"
@@ -37,7 +38,6 @@
     update_cache: true
     cache_valid_time: 120
 
-
 # Post installation steps
 
 - name: Create the docker group
@@ -64,15 +64,11 @@
     groups: docker
     append: true
 
-- name: Enable the docker service
+- name: Enable the docker services
   ansible.builtin.service:
     name: docker
     enabled: true
-
-- name: Enable the containerd service
-  ansible.builtin.service:
-    name: containerd
-    enabled: true
+  loop: "{{ docker_services }}"
 
 # Configure default logging driver
 - name: Copy docker daemon config
@@ -81,5 +77,5 @@
     dest: /etc/docker/daemon.json
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify: Restart docker service
