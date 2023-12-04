@@ -11,6 +11,7 @@ webserver_docker_volumes:
   - "{{ webserver_persistent_volume }}/nginx"
   - "{{ webserver_persistent_volume }}/mysql"
   - "{{ webserver_persistent_volume }}/wordpress"
+  - "{{ webserver_persistent_volume }}/letsencrypt"
 
 webserver_config_files:
   - { src: "docker-compose.yml", dest: "{{ webserver_docker_compose_dir }}/docker-compose.yml" }
