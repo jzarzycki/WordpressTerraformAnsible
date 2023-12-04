@@ -1,5 +1,6 @@
 ---
 # tasks file for common
+
 - name: Create group for non root user
   ansible.builtin.group:
     name: janek
@@ -30,7 +31,7 @@
     state: present
 
 - name: Make sure ssh directory and its contents have proper permissions
-  ansible.builtin.lineinfile:
+  ansible.builtin.file:
     path: /home/janek/.ssh
     mode: "0700"
     owner: janek
