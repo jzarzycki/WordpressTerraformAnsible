@@ -16,6 +16,7 @@ terraform apply plan.txt
 ## Provision the infrastrucutre
 The playbook **ansible/main.yml** needs to be executed in order to provision the infrastructure created by terraform.<br>
 Terraform creates the ansible inventory file **ansible/inventory** as part of its configuration.
+In order to be able to execute this playbook you need to provide values for the **ansible/roles/webserver/files/.env** file, example configuration can be found inside **.env.example**.
 ```bash
 cd ../ansible
 ansible-playbook -i inventory main.yml
