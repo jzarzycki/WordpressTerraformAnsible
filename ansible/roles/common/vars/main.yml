@@ -13,6 +13,8 @@ common_ssh_conf_list:
   - { name: "PermitRootLogin", value: "no" }
   - { name: "MaxAuthTries", value: "4" }
   - { name: "PermitUserEnvironment", value: "no" }
+  - { name: "AllowUsers", value: "janek" }
+  - { name: "Protocol", value: "2" }
 
 swap_file_path: "/swapfile"
 swap_file_size: "1G"
