@@ -74,24 +74,24 @@
 
 - name: Create the swap file
   community.general.filesize:
-    path: "{{ swap_file_path }}"
-    size: "{{ swap_file_size }}"
+    path: "{{ common_swap_file_path }}"
+    size: "{{ common_swap_file_size }}"
   register: swap_file_create
 
 - name: Set permissions on swap file
   ansible.builtin.file:
-    path: "{{ swap_file_path }}"
+    path: "{{ common_swap_file_path }}"
     owner: root
     group: root
     mode: "0600"
 
 - name: Make swap file if necessary.
-  ansible.builtin.command: mkswap {{ swap_file_path }}
+  ansible.builtin.command: mkswap {{ common_swap_file_path }}
   when: swap_file_create is changed
   register: mkswap_result
 
 - name: Run swapon on the swap file.
-  ansible.builtin.command: swapon {{ swap_file_path }}
+  ansible.builtin.command: swapon {{ common_swap_file_path }}
   when:
     - mkswap_result is changed
 

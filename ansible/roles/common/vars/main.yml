@@ -16,5 +16,5 @@ common_ssh_conf_list:
   - { name: "AllowUsers", value: "janek" }
   - { name: "Protocol", value: "2" }
 
-swap_file_path: "/swapfile"
-swap_file_size: "1G"
+common_swap_file_path: "/swapfile"
+common_swap_file_size: "1G"
