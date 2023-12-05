@@ -1,8 +1,5 @@
 ---
 # tasks file for webserver
-# TODO: add swap file
-# TODO: generate or renew ssl certs
-# TODO: add crontab for renewing ssl certs automatically
 
 - name: Allow http & https access in ufw
   community.general.ufw:
