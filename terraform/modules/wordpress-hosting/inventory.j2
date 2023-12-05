@@ -3,3 +3,6 @@ ${vps_ip_addr}
 
 [linux:children]
 webserver
+
+[linux:vars]
+ansible_ssh_private_key_file=${ssh_private_key_path}
