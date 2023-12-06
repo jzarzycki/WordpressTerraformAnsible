@@ -16,7 +16,7 @@ webserver_docker_volumes:
 webserver_config_files:
   - { src: ".env", dest: "{{ webserver_docker_compose_dir }}/.env" }
   - { src: "docker-compose.yml", dest: "{{ webserver_docker_compose_dir }}/docker-compose.yml" }
-  
+
 webserver_config_templates:
   - { src: "default.conf.j2", dest: "{{ webserver_persistent_volume }}/nginx/default.conf" }
 
