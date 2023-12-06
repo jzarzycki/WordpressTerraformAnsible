@@ -6,12 +6,14 @@ terraform {
     }
   }
 
-  backend "s3" {
-    bucket         = "my-site-terraform-state-bucket"
-    key            = "terraform.tfstate"
-    region         = "eu-central-1"
-    dynamodb_table = "state-locking"
+  cloud {
+    organization = "jzarzycki"
+
+    workspaces {
+      name = "Default-Workspace"
+    }
   }
+
 }
 
 provider "digitalocean" {
