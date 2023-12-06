@@ -5,7 +5,8 @@ Now that I've learned Terraform and Ansible It only made sense to revisit this o
 
 # Usage
 ## Create the infrastructure
-To create the resources specify the required variables inside **terraform/terraform.tfvars** (example file provided at **terraform/terraform.tfvars.example**) and run:
+Before trying to create the resources specify the required variables inside **terraform/terraform.tfvars** (example file provided at **terraform/terraform.tfvars.example**) and login to terraform cloud (remember to update values in **terraform/providers.tf**).<br>
+When you completed setting up you can finally run:
 ```bash
 cd terraform
 terraform init
