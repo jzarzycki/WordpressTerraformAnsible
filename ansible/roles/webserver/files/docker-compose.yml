@@ -9,7 +9,7 @@ services:
       - "443:443"
     volumes:
       - "${PERSISTENT_VOLUME_PATH}/nginx/:/etc/nginx/conf.d/"
-      - /mnt/vol1/letsencrypt:/etc/letsencrypt
+      - "${PERSISTENT_VOLUME_PATH}/letsencrypt:/etc/letsencrypt"
     restart: unless-stopped
     networks:
       - webserver
