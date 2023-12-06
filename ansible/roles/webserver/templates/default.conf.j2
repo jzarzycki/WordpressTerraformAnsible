@@ -1,22 +1,22 @@
 server {
 	listen 80;
 	listen [::]:80;
-    server_name www.jzarzycki.com;
+    server_name {{ webserver_website_url }};
     access_log /var/log/nginx/access.log;
 
     location / {
-        return 301 https://www.jzarzycki.com;
+        return 301 https://{{ webserver_website_url }};
     }
 }
 
 server {
     listen 443 ssl default_server;
 	listen [::]:443 ssl default_server;
-    server_name www.jzarzycki.com;
+    server_name {{ webserver_website_url }};
     access_log /var/log/nginx/access.log;
 
-    ssl_certificate     /etc/letsencrypt/live/jzarzycki.com/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/jzarzycki.com/privkey.pem;
+    ssl_certificate     {{ webserver_ssl_certs_dir }}/fullchain.pem;
+    ssl_certificate_key {{ webserver_ssl_certs_dir }}/privkey.pem;
     ssl_protocols       TLSv1.2 TLSv1.3;
     ssl_ciphers         HIGH:!aNULL:!MD5;
 
@@ -27,6 +27,6 @@ server {
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
 
-        proxy_pass http://wordpress;
+        proxy_pass http://{{ webserver_hostname_wordpress }};
     }
 }

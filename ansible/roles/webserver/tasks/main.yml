@@ -25,7 +25,6 @@
     group: docker
   loop: "{{ webserver_docker_volumes }}"
 
-# copy over the docker-compose config
 - name: Copy over config files
   ansible.builtin.copy:
     src: "{{ item.src }}"
@@ -34,4 +33,14 @@
     owner: docker
     group: docker
   loop: "{{ webserver_config_files }}"
+  notify: Run docker compose
+
+- name: Copy over config templates
+  ansible.builtin.template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: '0700'
+    owner: docker
+    group: docker
+  loop: "{{ webserver_config_templates }}"
   notify: Run docker compose

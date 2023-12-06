@@ -14,6 +14,12 @@ webserver_docker_volumes:
   - "{{ webserver_persistent_volume }}/letsencrypt"
 
 webserver_config_files:
-  - { src: "docker-compose.yml", dest: "{{ webserver_docker_compose_dir }}/docker-compose.yml" }
   - { src: ".env", dest: "{{ webserver_docker_compose_dir }}/.env" }
-  - { src: "default.conf", dest: "{{ webserver_persistent_volume }}/nginx/default.conf" }
+  - { src: "docker-compose.yml", dest: "{{ webserver_docker_compose_dir }}/docker-compose.yml" }
+  
+webserver_config_templates:
+  - { src: "default.conf.j2", dest: "{{ webserver_persistent_volume }}/nginx/default.conf" }
+
+webserver_website_url: www.jzarzycki.com
+webserver_ssl_certs_dir: /etc/letsencrypt/live/jzarzycki.com/
+webserver_hostname_wordpress: wordpress
