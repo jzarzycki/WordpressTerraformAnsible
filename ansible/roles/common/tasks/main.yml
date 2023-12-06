@@ -23,6 +23,7 @@
   ansible.builtin.lineinfile:
     path: /etc/sudoers
     line: "janek  ALL=(ALL) NOPASSWD: ALL"
+    validate: /usr/sbin/visudo -cf %s
 
 - name: Add ssh key to authorized_keys
   ansible.posix.authorized_key:
@@ -43,6 +44,7 @@
     path: /etc/ssh/sshd_config
     regexp: "^{{ item.name }} "
     line: "{{ item.name }} {{ item.value }}"
+    validate: '/usr/sbin/sshd -t -f %s'
   loop: "{{ common_ssh_conf_list }}"
   notify: Restart ssh
 
