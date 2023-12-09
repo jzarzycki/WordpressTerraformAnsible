@@ -54,6 +54,10 @@
     state: present
     update_cache: true
     cache_valid_time: 120
+  register: result
+  until: result is successful
+  retries: 12
+  delay: 5
 
 - name: Allow ssh access in ufw
   community.general.ufw:
