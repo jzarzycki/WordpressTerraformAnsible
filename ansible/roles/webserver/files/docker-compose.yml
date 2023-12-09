@@ -4,6 +4,8 @@ services:
   # Reverse Proxy
   web:
     image: nginx
+    depends_on:
+      - wordpress
     ports:
       - "80:80"
       - "443:443"
