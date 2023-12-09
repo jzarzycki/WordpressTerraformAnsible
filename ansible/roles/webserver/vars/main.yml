@@ -1,7 +1,7 @@
 ---
 # vars file for webserver
 webserver_docker_compose_dir: /home/wordpress-hosting
-webserver_persistent_volume: /mnt/vol1
+webserver_persistent_volume: /mnt/wordpress_data
 
 webserver_open_ports:
   - http

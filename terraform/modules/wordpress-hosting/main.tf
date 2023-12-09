@@ -13,8 +13,8 @@ resource "digitalocean_droplet" "web" {
 
 resource "digitalocean_volume" "vol" {
   region                  = "fra1"
-  name                    = "vol1"
-  size                    = 10
+  name                    = "wordpress-data"
+  size                    = 2
   initial_filesystem_type = "ext4"
   description             = "Persistent data volume for the Wordpress database"
   tags                    = ["terraform"]

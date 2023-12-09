@@ -63,13 +63,13 @@
 
 - name: Ensure that persistent volume dir exists
   ansible.builtin.file:
-    name: /mnt/vol1
+    name: /mnt/wordpress_data
     state: directory
 
 - name: Mount persistent volume
   ansible.posix.mount:
-    path: /mnt/vol1
-    src: /dev/disk/by-id/scsi-0DO_Volume_vol1
+    path: /mnt/wordpress_data
+    src: /dev/disk/by-id/scsi-0DO_Volume_wordpress-data
     fstype: ext4
     opts: discard,defaults,noatime
     state: mounted
