@@ -3,40 +3,40 @@
 
 - name: Create group for non root user
   ansible.builtin.group:
-    name: janek
-    gid: 1000
+    name: "{{ common_user_group }}"
+    gid: "{{ common_gid }}"
     state: present
 
 - name: Create non root user
   ansible.builtin.user:
-    name: janek
+    name: "{{ common_user_name }}"
     password: "*"
-    uid: 1000
-    home: "/home/janek"
+    uid: "{{ common_uid }}"
+    home: "/home/{{ common_user_name }}"
     shell: /bin/bash
-    group: janek
-    groups: janek,sudo
+    group: "{{ common_user_group }}"
+    groups: "{{ common_user_group }},sudo"
     append: true
 
 # User's password is disabled, so wouldn't be able to use sudo with a password
 - name: Allow passwordless sudo for non root user
   ansible.builtin.lineinfile:
     path: /etc/sudoers
-    line: "janek  ALL=(ALL) NOPASSWD: ALL"
+    line: "{{ common_user_name }}  ALL=(ALL) NOPASSWD: ALL"
     validate: /usr/sbin/visudo -cf %s
 
 - name: Add ssh key to authorized_keys
   ansible.posix.authorized_key:
-    key: "{{ lookup('file', '~/.ssh/terraform.pub') }}"
-    user: janek
+    key: "{{ lookup('file', '{{ common_ssh_pubkey_path }}') }}"
+    user: "{{ common_user_name }}"
     state: present
 
 - name: Make sure ssh directory and its contents have proper permissions
   ansible.builtin.file:
-    path: /home/janek/.ssh
+    path: "/home/{{ common_user_name }}/.ssh"
     mode: "0700"
-    owner: janek
-    group: janek
+    owner: "{{ common_user_name }}"
+    group: "{{ common_user_group }}"
     recurse: true
 
 - name: Harden ssh configuration
@@ -67,14 +67,14 @@
 
 - name: Ensure that persistent volume dir exists
   ansible.builtin.file:
-    name: /mnt/wordpress_data
+    name: "{{ common_volume_path }}"
     state: directory
 
 - name: Mount persistent volume
   ansible.posix.mount:
-    path: /mnt/wordpress_data
-    src: /dev/disk/by-id/scsi-0DO_Volume_wordpress-data
-    fstype: ext4
+    path: "{{ common_volume_path }}"
+    src: "/dev/disk/by-id/scsi-0DO_Volume_{{ common_volume_name }}"
+    fstype: "{{ common_volume_fstype }}"
     opts: discard,defaults,noatime
     state: mounted
 
@@ -104,7 +104,7 @@
 - name: Add fstab entry for swap file
   ansible.posix.mount:
     path: none
-    src: /swapfile
+    src: "{{ common_swap_file_path }}"
     fstype: swap
     opts: sw
     state: present # Ansible does not currently allow to use mounted with swap
