@@ -10,18 +10,19 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - "${PERSISTENT_VOLUME_PATH}/nginx/:/etc/nginx/conf.d/"
-      - "${PERSISTENT_VOLUME_PATH}/letsencrypt:/etc/letsencrypt"
+      - "{{ webserver_persistent_volume }}/nginx/:/etc/nginx/conf.d/"
+      - "{{ webserver_persistent_volume }}/letsencrypt:/etc/letsencrypt"
+      - {{ webserver_ssl_webroot_dir }}:{{ webserver_ssl_webroot_dir }}
     restart: unless-stopped
     networks:
       - webserver
 
   # Database
   db:
-    image: mysql:8.2
+    image: mysql:{{ webserver_mysql_version }}
     hostname: db
     volumes:
-      - ${PERSISTENT_VOLUME_PATH}/mysql:/var/lib/mysql
+      - {{ webserver_persistent_volume }}/mysql:/var/lib/mysql
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
@@ -39,7 +40,7 @@ services:
     hostname: wordpress
     restart: unless-stopped
     volumes:
-      - "${PERSISTENT_VOLUME_PATH}/wordpress:/var/www/html"
+      - "{{ webserver_persistent_volume }}/wordpress:/var/www/html"
     environment:
       WORDPRESS_DB_HOST: "${WORDPRESS_DB_HOST}"
       WORDPRESS_DB_NAME: "${MYSQL_DATABASE}"

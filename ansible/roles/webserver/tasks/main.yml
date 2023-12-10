@@ -44,3 +44,38 @@
     group: docker
   loop: "{{ webserver_config_templates }}"
   notify: Run docker compose
+
+- name: Install certbot
+  ansible.builtin.apt:
+    name: certbot
+    state: present
+    update_cache: true
+    cache_valid_time: 120
+  # circumvents a race condition with ubuntu unattended-upgrade
+  register: result
+  until: result is successful
+  retries: 12
+  delay: 5
+
+# This task requires port 80 to be open, shouldn't be a problem as it
+# normally only runs once and then ssl renewals use a different method
+- name: Create SSL certificate if none is present
+  ansible.builtin.command:
+    argv: "{{ webserver_ssl_create_job }}"
+  args:
+    creates: "{{ webserver_persistent_volume }}/letsencrypt/live/{{ webserver_website_url }}/"
+
+- name: Create webroot directory for certificate renewal
+  ansible.builtin.file:
+    name: "{{ webserver_ssl_webroot_dir }}"
+    state: directory
+
+- name: Add automatic SSL certificate renewal to cron
+  ansible.builtin.cron:
+    name: "renew ssl certs"
+    minute: 0
+    hour: 12
+    day: "*"
+    month: "*"
+    weekday: "*"
+    job: "{{ webserver_ssl_renew_job }}"
