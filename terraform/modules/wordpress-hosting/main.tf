@@ -29,22 +29,6 @@ resource "digitalocean_volume_attachment" "web-vol" {
   volume_id  = digitalocean_volume.vol.id
 }
 
-resource "digitalocean_reserved_ip" "ip" {
-  region = digitalocean_droplet.web.region
-
-  lifecycle {
-    prevent_destroy = true
-  }
-}
-
-resource "digitalocean_reserved_ip_assignment" "ip-web" {
-  droplet_id = digitalocean_droplet.web.id
-  ip_address = digitalocean_reserved_ip.ip.ip_address
-
-  # Wait until mounting the volume is finished before assigning ip
-  depends_on = [digitalocean_volume_attachment.web-vol]
-}
-
 resource "digitalocean_project" "lab" {
   name        = "Learning Lab"
   description = "A project for the purposes of learining DevOps"
@@ -61,6 +45,7 @@ resource "digitalocean_project_resources" "lab_resources" {
   resources = [
     digitalocean_droplet.web.urn,
     digitalocean_volume.vol.urn,
+    digitalocean_domain.default.urn,
   ]
 }
 
@@ -70,3 +55,32 @@ resource "digitalocean_ssh_key" "ssh_key" {
 
 }
 
+# Network
+resource "digitalocean_reserved_ip" "ip" {
+  region = digitalocean_droplet.web.region
+
+  lifecycle {
+    prevent_destroy = true
+  }
+}
+
+resource "digitalocean_reserved_ip_assignment" "ip-web" {
+  droplet_id = digitalocean_droplet.web.id
+  ip_address = digitalocean_reserved_ip.ip.ip_address
+
+  # Wait until mounting the volume is finished before assigning ip
+  depends_on = [digitalocean_volume_attachment.web-vol]
+}
+
+resource "digitalocean_domain" "default" {
+  name = "jzarzycki.com"
+}
+
+# TODO: use for_each to create sub domains
+resource "digitalocean_record" "sub_domains" {
+  for_each = toset(["www", "@"])
+  domain   = digitalocean_domain.default.id
+  type     = "A"
+  name     = each.value
+  value    = digitalocean_droplet.web.ipv4_address
+}
