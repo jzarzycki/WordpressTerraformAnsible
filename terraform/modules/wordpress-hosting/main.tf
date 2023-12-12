@@ -70,13 +70,3 @@ resource "digitalocean_ssh_key" "ssh_key" {
 
 }
 
-resource "local_file" "ansible_inventory" {
-  content = templatefile(format("%s/%s", path.module, "inventory.j2"),
-    {
-      vps_ip_addr  = digitalocean_droplet.web.ipv4_address
-      ssh_private_key_path = var.ssh_private_key_path
-    }
-  )
-  filename        = "../ansible/inventory"
-  file_permission = "0700"
-}
