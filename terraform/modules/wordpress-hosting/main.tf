@@ -76,7 +76,6 @@ resource "digitalocean_domain" "default" {
   name = "jzarzycki.com"
 }
 
-# TODO: use for_each to create sub domains
 resource "digitalocean_record" "sub_domains" {
   for_each = toset(["www", "@"])
   domain   = digitalocean_domain.default.id
