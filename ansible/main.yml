@@ -10,3 +10,4 @@
     - role: docker
     - role: webserver
       webserver_website_url: www.jzarzycki.com
+      webserver_email: jzarzycki97@gmail.com
