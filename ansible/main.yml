@@ -4,6 +4,9 @@
   remote_user: "{{ login_user | default('janek') }}"
   become: true
   roles:
-    - common
-    - docker
-    - webserver
+    - role: common
+      common_user_name: janek
+      common_user_group: janek
+    - role: docker
+    - role: webserver
+      webserver_website_url: www.jzarzycki.com

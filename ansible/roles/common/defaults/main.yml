@@ -1,2 +1,36 @@
 ---
 # defaults file for common
+# User
+common_user_name: user
+common_user_group: user
+common_uid: 1000
+common_gid: 1000
+
+# Volume
+common_volume_name: wordpress_data
+common_volume_path: /mnt/wordpress_data
+common_volume_fstype: ext4
+
+# Packages
+common_package_list:
+  - aptitude
+  - vim
+  - python3
+  - net-tools
+
+# ssh
+common_ssh_pubkey_path: ~/.ssh/terraform.pub
+common_ssh_conf_list:
+  - { name: "PubkeyAuthentication", value: "yes" }
+  - { name: "PasswordAuthentication", value: "no" }
+  - { name: "HostBasedAuthentication", value: "no" }
+  - { name: "UsePAM", value: "no" }
+  - { name: "PermitRootLogin", value: "no" }
+  - { name: "MaxAuthTries", value: "4" }
+  - { name: "PermitUserEnvironment", value: "no" }
+  - { name: "AllowUsers", value: "janek" }
+  - { name: "Protocol", value: "2" }
+
+# swap
+common_swap_file_path: "/swapfile"
+common_swap_file_size: "1G"

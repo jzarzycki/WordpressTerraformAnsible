@@ -1,2 +1,47 @@
 ---
 # defaults file for webserver
+webserver_website_url: www.example.com
+webserver_email: user@host.com
+webserver_hostname_wordpress: wordpress
+
+webserver_persistent_volume: /mnt/wordpress_data
+webserver_docker_compose_dir: /home/wordpress-hosting
+webserver_ssl_webroot_dir: /var/www/html
+
+webserver_mysql_version: "8.2"
+
+webserver_ssl_create_job:
+      - "/usr/bin/certbot"
+      - "certonly"
+      - "--standalone"
+      - "--email"
+      - "{{ webserver_email }}"
+      - "--agree-tos"
+      - "--no-eff-email"
+      - "-d"
+      - "{{ webserver_website_url }}"
+      - "--config-dir"
+      - "{{ webserver_persistent_volume }}/letsencrypt"
+      - "--non-interactive"
+webserver_ssl_renew_job: >
+  /usr/bin/certbot renew
+  --webroot -w {{ webserver_ssl_webroot_dir }}
+  --config-dir {{ webserver_persistent_volume }}/letsencrypt
+  --quiet
+
+webserver_open_ports:
+  - http
+  - https
+
+webserver_docker_volumes:
+  - "{{ webserver_persistent_volume }}/nginx"
+  - "{{ webserver_persistent_volume }}/mysql"
+  - "{{ webserver_persistent_volume }}/wordpress"
+  - "{{ webserver_persistent_volume }}/letsencrypt"
+
+webserver_config_files:
+  - { src: ".env", dest: "{{ webserver_docker_compose_dir }}/.env" }
+
+webserver_config_templates:
+  - { src: "docker-compose.yml.j2", dest: "{{ webserver_docker_compose_dir }}/docker-compose.yml" }
+  - { src: "default.conf.j2", dest: "{{ webserver_persistent_volume }}/nginx/default.conf" }
