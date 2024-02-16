@@ -64,16 +64,3 @@
     rule: allow
     port: ssh
     state: enabled
-
-- name: Ensure that persistent volume dir exists
-  ansible.builtin.file:
-    name: "{{ common_volume_path }}"
-    state: directory
-
-- name: Mount persistent volume
-  ansible.posix.mount:
-    path: "{{ common_volume_path }}"
-    src: "/dev/disk/by-id/scsi-0DO_Volume_{{ common_volume_name }}"
-    fstype: "{{ common_volume_fstype }}"
-    opts: discard,defaults,noatime
-    state: mounted

@@ -1,0 +1,6 @@
+---
+# defaults file for volume_mount
+
+volume_mount_name: wordpress_data
+volume_mount_path: /mnt/wordpress_data
+volume_mount_fstype: ext4

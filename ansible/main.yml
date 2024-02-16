@@ -7,9 +7,17 @@
     - role: common
       common_user_name: janek
       common_user_group: janek
+
     - role: swap
       swap_file_size: "1G"
+
+    - role: volume_mount
+      volume_mount_name: wordpress_data
+      volume_mount_path: /mnt/wordpress_data
+      volume_mount_fstype: ext4
+
     - role: docker
+
     - role: webserver
       webserver_website_url: www.jzarzycki.com
       webserver_email: jzarzycki97@gmail.com

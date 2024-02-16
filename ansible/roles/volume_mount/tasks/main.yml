@@ -1,0 +1,15 @@
+---
+# tasks file for volume_mount
+
+- name: Ensure that persistent volume dir exists
+  ansible.builtin.file:
+    name: "{{ volume_mount_path }}"
+    state: directory
+
+- name: Mount persistent volume
+  ansible.posix.mount:
+    path: "{{ volume_mount_path }}"
+    src: "/dev/disk/by-id/scsi-0DO_Volume_{{ volume_mount_name }}"
+    fstype: "{{ volume_mount_fstype }}"
+    opts: discard,defaults,noatime
+    state: mounted

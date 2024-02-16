@@ -6,11 +6,6 @@ common_user_group: user
 common_uid: 1000
 common_gid: 1000
 
-# Volume
-common_volume_name: wordpress_data
-common_volume_path: /mnt/wordpress_data
-common_volume_fstype: ext4
-
 # Packages
 common_package_list:
   - aptitude
