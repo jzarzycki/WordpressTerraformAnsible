@@ -30,7 +30,3 @@ common_ssh_conf_list:
   - { name: "PermitUserEnvironment", value: "no" }
   - { name: "AllowUsers", value: "janek" }
   - { name: "Protocol", value: "2" }
-
-# swap
-common_swap_file_path: "/swapfile"
-common_swap_file_size: "1G"

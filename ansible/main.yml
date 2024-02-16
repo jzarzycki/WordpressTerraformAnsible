@@ -7,6 +7,8 @@
     - role: common
       common_user_name: janek
       common_user_group: janek
+    - role: swap
+      swap_file_size: "1G"
     - role: docker
     - role: webserver
       webserver_website_url: www.jzarzycki.com
