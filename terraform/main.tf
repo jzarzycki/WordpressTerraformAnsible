@@ -2,6 +2,20 @@ module "wordpress_prod" {
   source              = "./modules/wordpress-hosting"
   do_token            = var.do_token
   ssh_public_key_path = var.ssh_public_key_path
+  tags                = ["terraform"]
+  vps = {
+    image  = "ubuntu-22-04-x64"
+    name   = "Wordpress"
+    region = "fra1"
+    size   = "s-1vcpu-512mb-10gb"
+  }
+  volume = {
+    region      = "fra1"
+    name        = "wordpress-data"
+    size        = 2
+    fs_type     = "ext4"
+    description = "Persistent data volume for the Wordpress database"
+  }
 }
 
 resource "local_file" "ansible_inventory" {

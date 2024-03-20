@@ -1,10 +1,10 @@
 resource "digitalocean_droplet" "web" {
-  image    = "ubuntu-22-04-x64"
-  name     = "Wordpress"
-  region   = "fra1"
-  size     = "s-1vcpu-512mb-10gb"
+  image    = var.vps.image
+  name     = var.vps.name
+  region   = var.vps.region
+  size     = var.vps.size
   ssh_keys = [digitalocean_ssh_key.ssh_key.id]
-  tags     = ["terraform"]
+  tags     = var.tags
 
   lifecycle {
     create_before_destroy = true
@@ -12,12 +12,12 @@ resource "digitalocean_droplet" "web" {
 }
 
 resource "digitalocean_volume" "vol" {
-  region                  = "fra1"
-  name                    = "wordpress-data"
-  size                    = 2
-  initial_filesystem_type = "ext4"
-  description             = "Persistent data volume for the Wordpress database"
-  tags                    = ["terraform"]
+  region                  = var.volume.region
+  name                    = var.volume.name
+  size                    = var.volume.size
+  initial_filesystem_type = var.volume.fs_type
+  description             = var.volume.description
+  tags                    = var.tags
 
   lifecycle {
     prevent_destroy = true
