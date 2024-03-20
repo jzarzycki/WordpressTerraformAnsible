@@ -1,5 +1,5 @@
 resource "digitalocean_reserved_ip" "ip" {
-  region     = var.region
+  region = var.region
 
   lifecycle {
     prevent_destroy = true

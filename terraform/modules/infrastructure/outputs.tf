@@ -10,11 +10,11 @@ output "droplet_id" {
 
 output "droplet_urn" {
   description = "Uniform Resource Name of the created droplet"
-  value = digitalocean_droplet.web.urn
+  value       = digitalocean_droplet.web.urn
 }
-    
+
 output "volume_urn" {
   description = "Uniform Resource Name of the created volume"
-  value = digitalocean_volume.vol.urn
+  value       = digitalocean_volume.vol.urn
 }
     

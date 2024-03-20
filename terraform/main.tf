@@ -22,11 +22,11 @@ module "wordpress_prod" {
 }
 
 module "networking" {
-  source       = "./modules/networking"
-  do_token     = var.do_token
-  domain_name  = "jzarzycki.com"
-  droplet_id   = module.wordpress_prod.droplet_id
-  region       = "fra1"
+  source      = "./modules/networking"
+  do_token    = var.do_token
+  domain_name = "jzarzycki.com"
+  droplet_id  = module.wordpress_prod.droplet_id
+  region      = "fra1"
 
   depends_on = [module.wordpress_prod]
 }
