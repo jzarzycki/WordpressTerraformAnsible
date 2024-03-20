@@ -10,7 +10,8 @@ terraform {
     organization = "jzarzycki"
 
     workspaces {
-      name = "Default-Workspace"
+      project = "jzarzycki"
+      tags = ["jzarzycki"]
     }
   }
 
