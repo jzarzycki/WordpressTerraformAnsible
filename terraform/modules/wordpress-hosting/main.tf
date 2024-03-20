@@ -50,8 +50,8 @@ resource "digitalocean_project_resources" "lab_resources" {
 }
 
 resource "digitalocean_ssh_key" "ssh_key" {
-  name       = "terraform-digitalocean"
-  public_key = file(var.ssh_public_key_path)
+  name       = var.ssh_key.name
+  public_key = file(var.ssh_key.public_key_path)
 
 }
 

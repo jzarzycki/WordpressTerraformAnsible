@@ -3,9 +3,12 @@ variable "do_token" {
   description = "Digital Ocean API token"
 }
 
-variable "ssh_public_key_path" {
-  type        = string
-  description = "Path to the public ssh key used to login to VPS"
+variable "ssh_key" {
+  type        = object({
+    name = string
+    public_key_path = string
+  })
+  description = "Configuration for the ssh key this module will install inside the VPS"
 }
 
 variable "tags" {
