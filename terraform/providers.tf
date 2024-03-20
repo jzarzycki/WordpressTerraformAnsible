@@ -11,7 +11,7 @@ terraform {
 
     workspaces {
       project = "jzarzycki"
-      tags = ["jzarzycki"]
+      tags    = ["jzarzycki"]
     }
   }
 
