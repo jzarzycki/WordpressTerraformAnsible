@@ -1,3 +1,9 @@
 do_token              = "$DO_TOKEN"
-ssh_public_key_path   = "$PUBKEY_PATH"
-ssh_private_key_path  = "$PRIVKEY_PATH"
+ssh_public_key_path  = {
+    Production = "$PUBKEY_PATH"
+    Development = "$PUBKEY_PATH_DEV"
+}
+ssh_private_key_path   = {
+    Production = "$PRIVKEY_PATH"
+    Development = "$PRIVKEY_PATH_DEV"
+}

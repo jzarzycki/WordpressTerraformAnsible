@@ -18,10 +18,6 @@ resource "digitalocean_volume" "vol" {
   initial_filesystem_type = var.volume.fs_type
   description             = var.volume.description
   tags                    = var.tags
-
-  lifecycle {
-    prevent_destroy = true
-  }
 }
 
 resource "digitalocean_volume_attachment" "web-vol" {
