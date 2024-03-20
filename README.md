@@ -37,4 +37,5 @@ ansible-playbook -i inventory main.yml --extravars "login_user=username"
 **│‎ ‎ ‎ ‎ ‎ ‎ ‎ └── webserver**          *# Configuration needed to provision the wordpress site on a prepared docker host*<br>
 **└── terraform**                  *# This is where all of the Terraform code resides*<br>
 ‎ ‎ ‎ ‎ **└── modules**<br>
-‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ **└── wordpress-hosting**  *# Module containing implementation of provisioning infrastructure for my website.*<br>
+‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ **└── infrastructure**     *# Module containing implementation of infrastructure for my website.*<br>
+‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ **└── networking**         *# Module containing networking related configuration for my website.*<br>
