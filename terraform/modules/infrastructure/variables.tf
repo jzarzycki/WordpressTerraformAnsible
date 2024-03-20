@@ -4,8 +4,8 @@ variable "do_token" {
 }
 
 variable "ssh_key" {
-  type        = object({
-    name = string
+  type = object({
+    name            = string
     public_key_path = string
   })
   description = "Configuration for the ssh key this module will install inside the VPS"

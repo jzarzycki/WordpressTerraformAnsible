@@ -1,9 +1,9 @@
 module "wordpress_prod" {
-  source              = "./modules/wordpress-hosting"
-  do_token            = var.do_token
-  tags                = ["terraform"]
+  source   = "./modules/infrastructure"
+  do_token = var.do_token
+  tags     = ["terraform"]
   ssh_key = {
-    name       = "terraform-digitalocean"
+    name            = "terraform-digitalocean"
     public_key_path = var.ssh_public_key_path
   }
   vps = {
@@ -19,6 +19,36 @@ module "wordpress_prod" {
     fs_type     = "ext4"
     description = "Persistent data volume for the Wordpress database"
   }
+}
+
+module "networking" {
+  source       = "./modules/networking"
+  do_token     = var.do_token
+  domain_name  = "jzarzycki.com"
+  droplet_id   = module.wordpress_prod.droplet_id
+  region       = "fra1"
+
+  depends_on = [module.wordpress_prod]
+}
+
+resource "digitalocean_project" "lab" {
+  name        = "Learning Lab"
+  description = "A project for the purposes of learining DevOps"
+  purpose     = "Web Application"
+  environment = "Development"
+
+  lifecycle {
+    prevent_destroy = true
+  }
+}
+
+resource "digitalocean_project_resources" "lab_resources" {
+  project = digitalocean_project.lab.id
+  resources = [
+    module.wordpress_prod.droplet_urn,
+    module.wordpress_prod.volume_urn,
+    module.networking.domain_urn
+  ]
 }
 
 resource "local_file" "ansible_inventory" {
