@@ -25,7 +25,7 @@ ansible-playbook -i inventory main.yml
 
 The login user for ssh can be specified as such:
 ```bash
-ansible-playbook -i inventory main.yml --extravars "login_user=username"
+ansible-playbook -i inventory main.yml --extra-vars "login_user=username"
 ```
 
 # Project structure
