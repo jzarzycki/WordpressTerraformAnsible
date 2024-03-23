@@ -36,12 +36,12 @@ module "wordpress_prod" {
 }
 
 module "networking" {
-  count       = terraform.workspace == "Production" ? 1 : 0
   source      = "./modules/networking"
   do_token    = var.do_token
   domain_name = "jzarzycki.com"
   droplet_id  = module.wordpress_prod.droplet_id
   region      = "fra1"
+  sub_domains = terraform.workspace == "Production" ? ["www", "@"] : ["dev"]
 
   depends_on = [module.wordpress_prod]
 }

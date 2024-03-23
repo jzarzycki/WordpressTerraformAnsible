@@ -17,3 +17,8 @@ variable "region" {
   type        = string
   description = "Which region to use for the domain"
 }
+
+variable "sub_domains" {
+  type = list(string)
+  description = "A list of sub domains to create"
+}
