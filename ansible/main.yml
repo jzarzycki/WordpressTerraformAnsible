@@ -21,3 +21,4 @@
     - role: webserver
       webserver_website_url: www.jzarzycki.com
       webserver_email: jzarzycki97@gmail.com
+      webserver_cert_type: certbot

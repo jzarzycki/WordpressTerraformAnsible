@@ -7,6 +7,7 @@ webserver_hostname_wordpress: wordpress
 webserver_persistent_volume: /mnt/wordpress_data
 webserver_docker_compose_dir: /home/wordpress-hosting
 webserver_ssl_webroot_dir: /var/www/html
+webserver_cert_type: certbot
 
 webserver_mysql_version: "8.2"
 
@@ -23,6 +24,14 @@ webserver_ssl_create_job:
       - "--config-dir"
       - "{{ webserver_persistent_volume }}/letsencrypt"
       - "--non-interactive"
+
+webserver_ssl_self_signed_job: >
+  mkdir -p {{ webserver_persistent_volume }}/letsencrypt/live/{{ webserver_website_url }}/ &&
+  openssl req -x509
+    -out "{{ webserver_persistent_volume }}/letsencrypt/live/{{ webserver_website_url }}/fullchain.pem"
+    -keyout "{{ webserver_persistent_volume }}/letsencrypt/live/{{ webserver_website_url }}/privkey.pem"
+    -newkey rsa:2048 -nodes -sha256 -subj '/CN={{ webserver_website_url }}' -extensions EXT
+    -config <(printf "[dn]\nCN={{ webserver_website_url }}\n[req]\ndistinguished_name = dn\n[EXT]\nsubjectAltName=DNS:{{ webserver_website_url }}\nkeyUsage=digitalSignature\nextendedKeyUsage=serverAuth")
 webserver_ssl_renew_job: >
   /usr/bin/certbot renew
   --webroot -w {{ webserver_ssl_webroot_dir }}

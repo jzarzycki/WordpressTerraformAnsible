@@ -64,6 +64,14 @@
     argv: "{{ webserver_ssl_create_job }}"
   args:
     creates: "{{ webserver_persistent_volume }}/letsencrypt/live/{{ webserver_website_url }}/"
+  when: webserver_cert_type == "certbot"
+
+- name: Create SSL self-signed certificate
+  ansible.builtin.command:
+    argv: "{{ webserver_ssl_self_signed_job }}"
+  args:
+    creates: "{{ webserver_persistent_volume }}/letsencrypt/live/{{ webserver_website_url }}/"
+  when: webserver_cert_type == "self_signed"
 
 - name: Create webroot directory for certificate renewal
   ansible.builtin.file:
