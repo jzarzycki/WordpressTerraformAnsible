@@ -55,7 +55,7 @@
   register: result
   until: result is successful
   retries: 12
-  delay: 5
+  delay: 10
 
 # This task requires port 80 to be open, shouldn't be a problem as it
 # normally only runs once and then ssl renewals use a different method

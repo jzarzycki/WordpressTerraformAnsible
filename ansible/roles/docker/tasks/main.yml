@@ -10,7 +10,7 @@
   register: result
   until: result is successful
   retries: 12
-  delay: 5
+  delay: 10
 
 - name: Set proper permissions for /etc/apt/keyrings
   ansible.builtin.file:
@@ -35,7 +35,7 @@
   register: result
   until: result is successful
   retries: 12
-  delay: 5
+  delay: 10
 
 - name: Install docker packages
   ansible.builtin.apt:
@@ -45,7 +45,7 @@
   register: result
   until: result is successful
   retries: 12
-  delay: 5
+  delay: 10
 
 # Post installation steps
 - name: Create the docker group
