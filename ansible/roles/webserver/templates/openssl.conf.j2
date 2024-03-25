@@ -1,0 +1,8 @@
+[dn]
+CN={{ webserver_website_url }}
+[req]
+distinguished_name = dn
+[EXT]
+subjectAltName=DNS:{{ webserver_website_url }}
+keyUsage=digitalSignature
+extendedKeyUsage=serverAuth
