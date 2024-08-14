@@ -58,7 +58,7 @@ resource "digitalocean_project_resources" "lab_resources" {
   resources = terraform.workspace == "Production" ? [
     module.wordpress_prod.droplet_urn,
     module.wordpress_prod.volume_urn,
-    module.networking[0].domain_urn
+    module.networking.domain_urn
     ] : [
     module.wordpress_prod.droplet_urn,
     module.wordpress_prod.volume_urn,
